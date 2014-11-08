@@ -15,14 +15,16 @@ int main()
 
     clrscr();
 
-    for (cp = hello_world, scrpos = 0x224; *cp; scrpos += 1, cp += 1)
+    for (cp = hello_world, scrpos = 0x083; *cp; scrpos += 1, cp += 1)
     {
         *(VIDEO_RAM_START + scrpos) = *cp;
     }
 
     while (1)
-        ;
+    {
+        char c = cgetc();
+        *(VIDEO_RAM_START + scrpos++) = c;
+    }
 
     return 0;
 }
-
