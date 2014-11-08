@@ -12,7 +12,7 @@ in this [fork of cc65](https://github.com/smuehlst/cc65) on GitHub.
 
 * Clone the [cc65](https://github.com/smuehlst/cc65) and [this repository](https://github.com/smuehlst/cc65) side-by-side.
 * Build the cc65 compiler.
-* Build the test program(s) in the [src subdirectory](https://github.com/smuehlst/c1pctest/tree/src)
+* Build the test program(s) in the [src subdirectory](https://github.com/smuehlst/c1pctest/tree/master/src)
 * The C1P object files are the *.c1p files.
 
 At the moment the programs are tested in the [C1Pjs JavaScript simulation
