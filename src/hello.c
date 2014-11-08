@@ -1,12 +1,12 @@
 /*
  * Challenger 1P Hello World Program for cc65.
  */
+
+#include <conio.h>
+
 #define VIDEO_RAM_START ((char *) 0xd000)
 
-extern void clrscr(void);
-
-int
-main()
+int main()
 {
     static const char hello_world[] = "Hello world!";
 
@@ -15,13 +15,14 @@ main()
 
     clrscr();
 
-    for (cp = hello_world, scrpos = 0x224; *cp; scrpos +=1, cp += 1)
+    for (cp = hello_world, scrpos = 0x224; *cp; scrpos += 1, cp += 1)
     {
-	*(VIDEO_RAM_START + scrpos) = *cp;
+        *(VIDEO_RAM_START + scrpos) = *cp;
     }
 
-    while (1);
-	
+    while (1)
+        ;
+
     return 0;
 }
 
