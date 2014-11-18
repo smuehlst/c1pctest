@@ -8,22 +8,29 @@
 
 int main()
 {
-    static const char hello_world[] = "Hello world!";
+    static const char hello_world[] = "Hello world!\n";
 
-    int scrpos;
     const char *cp;
+    unsigned int i;
 
     clrscr();
 
-    for (cp = hello_world, scrpos = 0x083; *cp; scrpos += 1, cp += 1)
+    for (cp = hello_world; *cp; cp += 1)
     {
-        *(VIDEO_RAM_START + scrpos) = *cp;
+        cputc(*cp);
     }
+
+    for (i = 0; i < 256; i += 1) {
+        cputc((unsigned char ) i);
+    }
+
+    cputc(' ');
+    cputc((char) wherex());
 
     while (1)
     {
         char c = cgetc();
-        *(VIDEO_RAM_START + scrpos++) = c;
+        cputc(c);
     }
 
     return 0;
