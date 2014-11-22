@@ -8,24 +8,22 @@
 
 int main()
 {
-    static const char hello_world[] = "Hello world!\n";
+    static const char hello_world[] = "Hello world!";
 
     const char *cp;
     unsigned int i;
 
     clrscr();
 
-    for (cp = hello_world; *cp; cp += 1)
-    {
-        cputc(*cp);
-    }
+    gotoxy(0, 0);
+
+    cputs(hello_world);
+
+    gotoxy(2, 0);
 
     for (i = 0; i < 256; i += 1) {
         cputc((unsigned char ) i);
     }
-
-    cputc(' ');
-    cputc((char) wherex());
 
     while (1)
     {
