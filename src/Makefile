@@ -1,4 +1,5 @@
 CC65BINDIR = ../../cc65/bin
+CC65LIBDIR = ../../cc65/lib
 CL   = $(CC65BINDIR)/cl65
 CC   = $(CC65BINDIR)/cc65
 AS   = $(CC65BINDIR)/ca65
@@ -12,6 +13,8 @@ STARTADDR = 0x300
 C1PTARGETS = hello.c1p minimal.c1p
 
 all: $(C1PTARGETS)
+
+$(C1PTARGETS): $(CC65LIBDIR)/c1p.lib
 
 .c.c1p:
 	$(CL) --start-addr $(STARTADDR) --mapfile $(basename $<).map -vm -t c1p $<
