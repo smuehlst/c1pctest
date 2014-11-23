@@ -4,9 +4,7 @@
 
 #include <conio.h>
 
-#define VIDEO_RAM_START ((char *) 0xd000)
-
-int main()
+int main(void)
 {
     static const char hello_world[] =
             "Hello world!\r\ncc65 for Challenger 1P";
@@ -30,6 +28,7 @@ int main()
     cputsxy(0, 14, "cputsxy\r\n");
 
     cprintf("cprintf '%s' %d %d\r\n", "string", (int) wherex(), (int) wherey());
+    cputs("now type something:\r\n");
 
     while (1) {
         char c = cgetc();
