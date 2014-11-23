@@ -8,9 +8,9 @@
 
 int main()
 {
-    static const char hello_world[] = "Hello world!";
+    static const char hello_world[] =
+            "Hello world!\r\ncc65 for Challenger 1P";
 
-    const char *cp;
     unsigned int i;
 
     clrscr();
@@ -19,14 +19,19 @@ int main()
 
     cputs(hello_world);
 
-    gotoxy(2, 0);
+    gotoxy(0, 4);
 
     for (i = 0; i < 256; i += 1) {
-        cputc((unsigned char ) i);
+        if (i != '\n' && i != '\r') {
+            cputc((unsigned char ) i);
+        }
     }
 
-    while (1)
-    {
+    cputsxy(0, 14, "cputsxy\r\n");
+
+    cprintf("cprintf '%s' %d %d\r\n", "string", (int) wherex(), (int) wherey());
+
+    while (1) {
         char c = cgetc();
         cputc(c);
     }
