@@ -15,11 +15,8 @@ in this [fork of cc65](https://github.com/smuehlst/cc65) on GitHub.
 * Build the test program(s) in the [src subdirectory](https://github.com/smuehlst/c1pctest/tree/master/src)
 * The C1P object files are the *.c1p files.
 
-At the moment the programs are tested in the [C1Pjs JavaScript simulation
-of the Challenger 1P](http://www.pcjs.org/docs/c1pjs/). Until the feature
-"Load Local File" is released on the www.pcjs.org, the C1Pjs simulator
-with this feature can be cloned from
-[this fork of pcjs](https://github.com/smuehlst/pcjs).
+The programs are tested in the [C1Pjs JavaScript simulation
+of the Challenger 1P](http://www.pcjs.org/docs/c1pjs/).
 
 In theory it should also be possible to upload the *.c1p object files
 via the serial port to real Challenger 1Ps in order to run them, but this
