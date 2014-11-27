@@ -1,5 +1,6 @@
 hello
 minimal
+misctest
 *.map
 *.o
 *.c1p
