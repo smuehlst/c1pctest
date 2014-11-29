@@ -13,13 +13,11 @@ int main(void)
 
     clrscr();
 
-    /* TODO this should be implicitly done in clrscr() */
-    gotoxy(0, 0);
-
     cputs(hello_world);
 
     gotoxy(0, 4);
 
+    /* Output a few graphical symbols */
     for (i = 0; i < 0x20; i += 1) {
         if (i != '\n' && i != '\r') {
             cputc((unsigned char ) i);
