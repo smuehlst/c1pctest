@@ -24,10 +24,16 @@ int main(void)
         }
     }
 
-    cputsxy(0, 8, "cputsxy\r\n");
+    cputsxy(0, 7, "cputsxy\r\n");
 
     cprintf("cprintf '%s' %d %d\r\n", "string", (int) wherex(), (int) wherey());
-    cputs("now type something (vi keys for positioning, "
+    /* TODO fetch screen width via library */
+    chline(25);
+    gotox(0);
+    cvline(2);
+    cvlinexy(24, wherey() - 2, 2);
+    chlinexy(0, wherey(), 25);
+    cputs("now type (vi keys for positioning, "
             "'A' cursor on, 'B' cursor off):\r\n");
 
     /* cursor on */
