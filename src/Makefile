@@ -1,5 +1,6 @@
-CC65BINDIR = ../../cc65/bin
-CC65LIBDIR = ../../cc65/lib
+CC65DIR = ../../cc65
+CC65BINDIR = $(CC65DIR)/bin
+CC65LIBDIR = $(CC65DIR)/lib
 CL   = $(CC65BINDIR)/cl65
 CC   = $(CC65BINDIR)/cc65
 AS   = $(CC65BINDIR)/ca65
