@@ -87,11 +87,22 @@ void t_recursion(void)
 static
 void t_conio(void)
 {
+    unsigned char xsize, ysize;
+    unsigned char i;
+
+    screensize(&xsize, &ysize);
+
+    cprintf("Screen size is %ux%u\r\n",
+            (unsigned int) xsize, (unsigned int) ysize);
     cputs("Line created with chline(), partially blanked out with "
-            "cclear()\r\n");
+            "cclear():\r\n");
     chline(10);
     cclearxy(2, wherey(), 6);
     gotoxy(0, wherey() + 1);
+    for (i = 0; i < xsize; i += 1) {
+        cputc('0' + (i % 10));
+    }
+    cputs("\r\n");
 }
 
 static const test tests[] =
