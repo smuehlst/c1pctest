@@ -84,20 +84,31 @@ void t_recursion(void)
     }
 }
 
+static
+void t_conio(void)
+{
+    cputs("Line created with chline(), partially blanked out with "
+            "cclear()\r\n");
+    chline(10);
+    cclearxy(2, wherey(), 6);
+    gotoxy(0, wherey() + 1);
+}
+
 static const test tests[] =
-    {
-        { "malloc", t_malloc },
-        { "longjmp/setjmp", t_longjmp },
-        { "recursion", t_recursion } };
+{
+{ "malloc", t_malloc },
+{ "longjmp/setjmp", t_longjmp },
+{ "recursion", t_recursion },
+{ "conio", t_conio } };
 
 int main(void)
 {
-    unsigned char i;
+    unsigned char i, count;
 
-    for (i = 0; i < sizeof(tests) / sizeof(tests[0]); i += 1) {
+    for (i = 0, count = sizeof(tests) / sizeof(tests[0]); i < count; i += 1) {
         clrscr();
-        gotoxy(0, 1);
-        cprintf("Test %d: %s\r\n\r\n", (int) i + 1, tests[i].test_name);
+        cprintf("Test %d of %d: %s\r\n\r\n", (int) i + 1, (int) count,
+                    tests[i].test_name);
         tests[i].test_fp();
         cputs("Press <RETURN>\r\n");
         cgetc();
