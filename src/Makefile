@@ -5,7 +5,7 @@ CL   = $(CC65BINDIR)/cl65
 CC   = $(CC65BINDIR)/cc65
 AS   = $(CC65BINDIR)/ca65
 LD   = $(CC65BINDIR)/ld65
-C1P65 = $(CC65BINDIR)/c1p65
+SREC_CAT = srec_cat
 
 CFLAGS = -O
 
@@ -21,4 +21,4 @@ $(C1PTARGETS): $(CC65LIBDIR)/c1p.lib
 
 .c.c1p:
 	$(CL) $(CFLAGS) --start-addr $(STARTADDR) --mapfile $(basename $<).map -vm -t c1p $<
-	$(C1P65) -S $(STARTADDR) $(basename $<)
+	$(SREC_CAT) $(basename $<) -binary -offset $(STARTADDR) -o $(basename $<).c1p -Ohio_Scientific -execution-start-address=$(STARTADDR)

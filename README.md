@@ -10,6 +10,7 @@ in this [fork of cc65](https://github.com/smuehlst/cc65) on GitHub.
 
 ## Quick Start
 
+* Install the [srecord utility](http://srecord.sourceforge.net/), which is needed to convert cc65 object files to a format that can be uploaded via the OSI machine monitor.
 * Clone the [cc65](https://github.com/smuehlst/cc65) and [this repository](https://github.com/smuehlst/cc65) side-by-side.
 * Build the cc65 compiler.
 * Build the test program(s) in the [src subdirectory](https://github.com/smuehlst/c1pctest/tree/master/src)
