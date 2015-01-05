@@ -4,3 +4,4 @@ misctest
 *.map
 *.o
 *.c1p
+/Eliza
