@@ -13,7 +13,7 @@ STARTADDR = 0x200
 
 .SUFFIXES: .c1p
 
-C1PTARGETS = hello.c1p minimal.c1p misctest.c1p
+C1PTARGETS = hello.c1p minimal.c1p misctest.c1p Eliza.c1p
 
 all: $(C1PTARGETS)
 

@@ -1,24 +1,37 @@
 // Copyright Creative Computing, Morristown, New Jersey
 // C conversion by Payton Byrd from BASIC in "More BASIC
 // Computer Games" by Creative Computing.
+// conio version for OSI Challenger 1P by Stephan Muehlstrasser
 
 #include <stdlib.h>
-#include <stdio.h>
+#include <conio.h>
+#include <stdio.h> /* for sprintf() */
 #include <string.h>
 
+static unsigned char input[81];
+
 // Prompt the user and get the input
-unsigned char* getInput()
+void getInput()
 {
-	unsigned char result[81];
-	
-	putchar('?');
-	putchar(' ');
+	char count = 0;
+	char c;
 
-	fgets(result, sizeof result, stdin);
-	
-	result[strlen(result) - 1] = '\0';
+	cputc('?');
+	cputc(' ');
 
-	return result;
+	do
+	{
+		c = cgetc();
+
+		if (c != '\r' && c != '\n')
+		{
+			input[count] = (unsigned char) c;
+			cputc(c);
+			count += 1;
+		}
+	} while (c != '\r' && c != '\n' && count < sizeof(input) - 1);
+	
+	input[count] = 0;
 }
 
 // The following code was written by Netocrat
@@ -213,7 +226,6 @@ unsigned char* responses[] = {
 // Main function
 void main(void)
 {
-	static unsigned char* input;			// User's input
 	static unsigned char lastInput[81];		// User's last input
 	static unsigned char conjugated[81];	// Temporary variable to conjugate the question
 	static unsigned char counter;			// Loop variable
@@ -231,14 +243,16 @@ void main(void)
 	// Initialize the lastInput string.
 	lastInput[0] = '\0';
 
+	clrscr();
+
 	// Display program header
-	putchar(147u);
-	puts(  "              Eliza\r");
-	puts(  "        Creative Computing\r");
-	puts(  "      Morristown, New Jersey\r");
-	puts("\r   Converted to C by Payton Byrd\r");
-	puts("\r\n");
-	puts("Hi!  I'm Eliza.  What's your problem?\r");
+	cputs(  "Eliza\r\n");
+	cputs(  "Creative Computing\r\n");
+	cputs(  "Morristown, New Jersey\r\n");
+	cputs("\r\nConverted to C by Payton Byrd\r\n");
+	cputs("\r\nChallenger 1P version by Stephan Muehlstrasser\r\n");
+	cputs("\r\n");
+	cputs("Hi!  I'm Eliza.  What's your problem?\r\n");
 
 	// This is the program that does not end.
 	// It goes on and on my friend.
@@ -248,18 +262,18 @@ void main(void)
 	for(;;)
 	{
 		// Get the user's input.
-		input = getInput();
+		getInput();
 
 		// Make it lower case.
 		strlower(input);
 
 		// Move the cursor down.
-		puts("\r");
+		cputs("\r\n");
 
 		// Check if the user is repeating themself.
 		if(strlen(lastInput) != 0 && strcmp(input, lastInput) == 0)
 		{
-			puts("\rPlease don't repeat yourself!");
+			cputs("\r\nPlease don't repeat yourself!");
 		}
 		else
 		{
@@ -322,9 +336,9 @@ void main(void)
 			replyLength = lookup[keywordIndex * 2 + 1];
 
 			// Display the response
-			puts("\r");
-			printf(responses[replyStart + nextReplyIndex[keywordIndex]], conjugated);
-			puts("\r");
+			cputs("\r\n");
+			cprintf(responses[replyStart + nextReplyIndex[keywordIndex]], conjugated);
+			cputs("\r\n");
 
 			// Increment the response counter
 			++nextReplyIndex[keywordIndex];
