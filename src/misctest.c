@@ -102,9 +102,8 @@ void t_conio(void)
     for (i = 0; i < xsize; i += 1) {
         cputc('0' + (i % 10));
     }
-#if 0
+
     {
-        /* Including this code makes the executable too big */
         int n, decimalnum;
         char name[50];
 
@@ -113,7 +112,7 @@ void t_conio(void)
         n = cscanf("%d %s", &decimalnum, name);
         cprintf("\r\ngot %d and '%s'\r\n", decimalnum, name);
     }
-#endif
+
 }
 
 static const test tests[] =
