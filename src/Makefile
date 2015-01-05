@@ -1,3 +1,13 @@
+ifneq ($(shell echo),)
+  CMD_EXE = 1
+endif
+
+ifdef CMD_EXE
+RM := del /f
+else
+RM := rm -f
+endif
+
 CC65DIR = ../../cc65
 CC65BINDIR = $(CC65DIR)/bin
 CC65LIBDIR = $(CC65DIR)/lib
@@ -22,3 +32,6 @@ $(C1PTARGETS): $(CC65LIBDIR)/c1p.lib
 .c.c1p:
 	$(CL) $(CFLAGS) --start-addr $(STARTADDR) --mapfile $(basename $<).map -vm -t c1p $<
 	$(SREC_CAT) $(basename $<) -binary -offset $(STARTADDR) -o $(basename $<).c1p -Ohio_Scientific -execution-start-address=$(STARTADDR)
+
+clean:
+	$(RM) $(C1PTARGETS)
