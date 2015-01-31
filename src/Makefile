@@ -23,7 +23,7 @@ STARTADDR = 0x200
 
 .SUFFIXES: .c1p
 
-C1PTARGETS = hello.c1p minimal.c1p misctest.c1p Eliza.c1p
+C1PTARGETS = hello.c1p minimal.c1p misctest.c1p asmonly.c1p Eliza.c1p
 
 all: $(C1PTARGETS)
 
@@ -31,6 +31,10 @@ $(C1PTARGETS): $(CC65LIBDIR)/c1p.lib
 
 .c.c1p:
 	$(CL) $(CFLAGS) --start-addr $(STARTADDR) --mapfile $(basename $<).map -vm -t c1p $<
+	$(SREC_CAT) $(basename $<) -binary -offset $(STARTADDR) -o $(basename $<).c1p -Ohio_Scientific -execution-start-address=$(STARTADDR)
+
+.s.c1p:
+	$(CL) $(ASFLAGS) -C c1p-asm.cfg --start-addr $(STARTADDR) --mapfile $(basename $<).map -vm -t c1p $<
 	$(SREC_CAT) $(basename $<) -binary -offset $(STARTADDR) -o $(basename $<).c1p -Ohio_Scientific -execution-start-address=$(STARTADDR)
 
 clean:
