@@ -17,8 +17,13 @@ in this [fork of cc65](https://github.com/smuehlst/cc65) on GitHub.
 * The C1P object files are the *.c1p files.
 
 The programs are tested in the [C1Pjs JavaScript simulation
-of the Challenger 1P](http://www.pcjs.org/docs/c1pjs/).
+of the Challenger 1P](http://www.pcjs.org/docs/c1pjs/). The c1p target by
+default links for machines with 32 kB RAM. Therefore the programs need to
+be run in the
+[OSI Challenger 1P (32Kb) with Disk Support](http://www.pcjs.org/devices/c1p/machine/32kb/)
+machine.
 
-In theory it should also be possible to upload the *.c1p object files
-via the serial port to real Challenger 1Ps in order to run them, but this
-has not been tested yet.
+There's one example program "hello8k.c1p" that is built for 8 kB RAM. This
+can be executed in the
+[OSI Challenger 1P (8Kb) with Debugger](http://www.pcjs.org/docs/c1pjs/)
+machine.
