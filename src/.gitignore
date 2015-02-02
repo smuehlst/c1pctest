@@ -1,7 +1,9 @@
 hello
 minimal
 misctest
+Eliza
+asmonly
+hello8k
 *.map
 *.o
 *.c1p
-/Eliza
