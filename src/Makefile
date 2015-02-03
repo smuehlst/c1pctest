@@ -23,24 +23,24 @@ STARTADDR = 0x200
 
 .SUFFIXES: .c1p
 
-C1PTARGETS = hello.c1p hello8k.c1p minimal.c1p misctest.c1p asmonly.c1p Eliza.c1p
+OSIC1PTARGETS = hello.c1p hello8k.c1p minimal.c1p misctest.c1p asmonly.c1p Eliza.c1p
 
-all: $(C1PTARGETS)
+all: $(OSIC1PTARGETS)
 
 # Link program for 8 kB RAM by defining __HIMEM__ symbol
 hello8k.c1p: hello.c
-	$(CL) $(CFLAGS) --start-addr $(STARTADDR) -Wl -D,__HIMEM__=$$2000 --mapfile hello8k.map -vm -t c1p $<
+	$(CL) $(CFLAGS) --start-addr $(STARTADDR) -Wl -D,__HIMEM__=$$2000 --mapfile hello8k.map -vm -t osic1p $<
 	$(SREC_CAT) $(basename $<) -binary -offset $(STARTADDR) -o hello8k.c1p -Ohio_Scientific -execution-start-address=$(STARTADDR)
 
-$(C1PTARGETS): $(CC65LIBDIR)/c1p.lib
+$(OSIC1PTARGETS): $(CC65LIBDIR)/osic1p.lib
 
 .c.c1p:
-	$(CL) $(CFLAGS) --start-addr $(STARTADDR) --mapfile $(basename $<).map -vm -t c1p $<
+	$(CL) $(CFLAGS) --start-addr $(STARTADDR) --mapfile $(basename $<).map -vm -t osic1p $<
 	$(SREC_CAT) $(basename $<) -binary -offset $(STARTADDR) -o $(basename $<).c1p -Ohio_Scientific -execution-start-address=$(STARTADDR)
 
 .s.c1p:
-	$(CL) $(ASFLAGS) -C c1p-asm.cfg --start-addr $(STARTADDR) --mapfile $(basename $<).map -vm -t c1p $<
+	$(CL) $(ASFLAGS) -C osic1p-asm.cfg --start-addr $(STARTADDR) --mapfile $(basename $<).map -vm -t osic1p $<
 	$(SREC_CAT) $(basename $<) -binary -offset $(STARTADDR) -o $(basename $<).c1p -Ohio_Scientific -execution-start-address=$(STARTADDR)
 
 clean:
-	$(RM) $(C1PTARGETS)
+	$(RM) $(OSIC1PTARGETS)
