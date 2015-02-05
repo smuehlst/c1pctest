@@ -137,10 +137,9 @@ int main(void)
 
     clrscr();
     gotoxy(0, 10);
-    cputs("Tests finished\r\n");
+    cputs("Tests finished\r\nPress <RETURN>\r\n");
 
-    while (1)
-        ;
+    cgetc();
 
     return 0;
 }
