@@ -29,8 +29,8 @@ all: $(OSIC1PTARGETS)
 
 # Link program for 8 kB RAM by defining __HIMEM__ symbol
 hello8k.c1p: hello.c
-	$(CL) $(CFLAGS) --start-addr $(STARTADDR) -Wl -D,__HIMEM__=$$2000 --mapfile hello8k.map -vm -t osic1p $<
-	$(SREC_CAT) $(basename $<) -binary -offset $(STARTADDR) -o hello8k.c1p -Ohio_Scientific -execution-start-address=$(STARTADDR)
+	$(CL) $(CFLAGS) --start-addr $(STARTADDR) -Wl -D,__HIMEM__=$$2000 --mapfile hello8k.map -vm -t osic1p -o hello8k $<
+	$(SREC_CAT) hello8k -binary -offset $(STARTADDR) -o hello8k.c1p -Ohio_Scientific -execution-start-address=$(STARTADDR)
 
 $(OSIC1PTARGETS): $(CC65LIBDIR)/osic1p.lib
 
