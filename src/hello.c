@@ -16,7 +16,10 @@ int main(void)
 
     cputs(hello_world);
 
-    gotoxy(0, 4);
+    /* kbhit() is currently a dummy function that returns always true */
+    if (kbhit()) {
+        gotoxy(0, 4);
+    }
 
     /* Output a few graphical symbols */
     for (i = 0; i < 0x20; i += 1) {
