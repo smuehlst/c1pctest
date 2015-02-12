@@ -10,6 +10,7 @@ int main(void)
             "Hello world!\r\ncc65 for Challenger 1P";
 
     unsigned int i;
+	char xwidth, ywidth;
 
     clrscr();
 
@@ -27,12 +28,13 @@ int main(void)
     cputsxy(0, 7, "cputsxy\r\n");
 
     cprintf("cprintf '%s' %d %d\r\n", "string", (int) wherex(), (int) wherey());
-    /* TODO fetch screen width via library */
-    chline(25);
+    screensize(&xwidth, &ywidth);
+    chline(ywidth);
     gotox(0);
     cvline(2);
-    cvlinexy(24, wherey() - 2, 2);
-    chlinexy(0, wherey(), 25);
+    cvlinexy(xwidth - 1, wherey() - 2, 2);
+    chlinexy(0, wherey(), xwidth);
+    cprintf("width %d height %d\r\n", (int) xwidth, (int) ywidth);
     cputs("now type (vi keys for positioning, "
             "'A' cursor on, 'B' cursor off):\r\n");
 
