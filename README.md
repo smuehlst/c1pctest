@@ -27,3 +27,7 @@ There's one example program "hello8k.c1p" that is built for 8 kB RAM. This
 can be executed in the
 [OSI Challenger 1P (8Kb) with Debugger](http://www.pcjs.org/docs/c1pjs/)
 machine.
+
+The Makefile can also generate Kansas City Standard WAV files for
+upload over the cassette port. For this the Python script kcs_encody.py
+by [David Beazley](http://www.dabeaz.com/py-kcs/index.html) is used.
