@@ -112,7 +112,6 @@ void t_conio(void)
         n = cscanf("%d %s", &decimalnum, name);
         cprintf("\r\ngot %d and '%s'\r\n", decimalnum, name);
     }
-
 }
 
 static const test tests[] =
