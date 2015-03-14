@@ -10,8 +10,8 @@
 # For producing the .c1p files the srec_cat program from the
 # SRecord tool collection (http://srecord.sourceforge.net/) is needed.
 #
-# For producing the WAV files the kcs_encode.py Python program
-# by David Beazley (http://www.dabeaz.com) is used. It requires
+# For producing the WAV files a modified version of the  kcs_encode.py Python
+# program by David Beazley (http://www.dabeaz.com) is used. It requires
 # Python 3.1.2 or newer.
 
 ifneq ($(shell echo),)
@@ -41,7 +41,7 @@ STARTADDR = 0x200
 
 .SUFFIXES: .c1p .wav
 
-PROGS = hello hello8k minimal misctest asmonly Eliza
+PROGS = hello hello8k hello8khybrid minimal misctest asmonly Eliza
 OSIC1PTARGETS = $(PROGS:=.c1p)
 WAVTARGETS = $(OSIC1PTARGETS:.c1p=.wav)
 
@@ -61,10 +61,10 @@ hellos3-32x28.c1p: hello.c $(CC65LIB)
 	$(CL) $(CFLAGS) --start-addr $(STARTADDR) --mapfile hellos3-32x28.map -vm -t osic1p -o hellos3-32x28 osic1p-screen-s3-32x28.o $<
 	$(SREC_CAT) hellos3-32x28 -binary -offset $(STARTADDR) -o hellos3-32x28.c1p -Ohio_Scientific -execution-start-address=$(STARTADDR)
 
-# Later: Link program for 8 kB RAM and for bloading with hybrid format
-# hello8khybrid.wav: hello.c $(CC65LIB)
-#	$(CL) $(CFLAGS) -u __BOOT__ --start-addr $(STARTADDR) -Wl -D,__HIMEM__=$$2000 --mapfile hello8khybrid.map -vm -t osic1p -o hello8khybrid.c1p $<
-#	$(PYTHON3) kcs_encode_bin.py hello8khybrid.c1p hello8khybrid.wav
+# Link program for 8 kB RAM and for loading with hybrid format
+hello8khybrid.wav: hello.c $(CC65LIB)
+	$(CL) $(CFLAGS) -u __BOOT__ --start-addr $(STARTADDR) -Wl -D,__HIMEM__=$$2000 --mapfile hello8khybrid.map -vm -t osic1p -o hello8khybrid.c1p $<
+	$(PYTHON3) kcs_encode_bin.py hello8khybrid.c1p hello8khybrid.wav
 	
 # Generate loadable program from C source
 .c.c1p:
@@ -78,7 +78,7 @@ hellos3-32x28.c1p: hello.c $(CC65LIB)
 
 # Generate Kansas City Standard WAV file for upload over cassette port
 .c1p.wav:
-	$(PYTHON3) kcs_encode.py $< $(basename $<).wav
+	$(PYTHON3) kcs_encode_bin.py $< $(basename $<).wav
 	
 clean:
 	$(RM) $(OSIC1PTARGETS) $(WAVTARGETS)

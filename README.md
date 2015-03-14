@@ -29,5 +29,6 @@ can be executed in the
 machine.
 
 The Makefile can also generate Kansas City Standard WAV files for
-upload over the cassette port. For this the Python script kcs_encody.py
-by [David Beazley](http://www.dabeaz.com/py-kcs/index.html) is used.
+upload over the cassette port. For this a modified version of the Python
+script kcs_encody.py by [David Beazley](http://www.dabeaz.com/py-kcs/index.html)
+is used.
