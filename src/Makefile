@@ -27,6 +27,7 @@ endif
 CC65DIR = ../../cc65
 CC65BINDIR = $(CC65DIR)/bin
 CC65LIBDIR = $(CC65DIR)/lib
+CC65LIB = $(CC65LIBDIR)/osic1p.lib
 CL   = $(CC65BINDIR)/cl65
 CC   = $(CC65BINDIR)/cc65
 AS   = $(CC65BINDIR)/ca65
@@ -48,13 +49,23 @@ all: $(OSIC1PTARGETS)
 
 wavs: $(WAVTARGETS)
 
-$(OSIC1PTARGETS): $(CC65LIBDIR)/osic1p.lib
+$(OSIC1PTARGETS): $(CC65LIB)
 
 # Link program for 8 kB RAM by defining __HIMEM__ symbol
-hello8k.c1p: hello.c
+hello8k.c1p: hello.c $(CC65LIB)
 	$(CL) $(CFLAGS) --start-addr $(STARTADDR) -Wl -D,__HIMEM__=$$2000 --mapfile hello8k.map -vm -t osic1p -o hello8k $<
 	$(SREC_CAT) hello8k -binary -offset $(STARTADDR) -o hello8k.c1p -Ohio_Scientific -execution-start-address=$(STARTADDR)
 
+# Link program for Superboard /// in 32x28 screen mode
+hellos3-32x28.c1p: hello.c $(CC65LIB)
+	$(CL) $(CFLAGS) --start-addr $(STARTADDR) --mapfile hellos3-32x28.map -vm -t osic1p -o hellos3-32x28 osic1p-screen-s3-32x28.o $<
+	$(SREC_CAT) hellos3-32x28 -binary -offset $(STARTADDR) -o hellos3-32x28.c1p -Ohio_Scientific -execution-start-address=$(STARTADDR)
+
+# Later: Link program for 8 kB RAM and for bloading with hybrid format
+# hello8khybrid.wav: hello.c $(CC65LIB)
+#	$(CL) $(CFLAGS) -u __BOOT__ --start-addr $(STARTADDR) -Wl -D,__HIMEM__=$$2000 --mapfile hello8khybrid.map -vm -t osic1p -o hello8khybrid.c1p $<
+#	$(PYTHON3) kcs_encode_bin.py hello8khybrid.c1p hello8khybrid.wav
+	
 # Generate loadable program from C source
 .c.c1p:
 	$(CL) $(CFLAGS) --start-addr $(STARTADDR) --mapfile $(basename $<).map -vm -t osic1p $<
