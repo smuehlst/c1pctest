@@ -61,6 +61,11 @@ hellos3-32x28.c1p: hello.c $(CC65LIB)
 	$(CL) $(CFLAGS) --start-addr $(STARTADDR) --mapfile hellos3-32x28.map -vm -t osic1p -o hellos3-32x28 osic1p-screen-s3-32x28.o $<
 	$(SREC_CAT) hellos3-32x28 -binary -offset $(STARTADDR) -o hellos3-32x28.c1p -Ohio_Scientific -execution-start-address=$(STARTADDR)
 
+# Experimental: Link program for C4P in 64x32 screen mode
+helloc4p-64x32.c1p: hello.c $(CC65LIB)
+	$(CL) $(CFLAGS) --start-addr $(STARTADDR) --mapfile helloc4p-64x32.map -vm -t osic1p -o helloc4p-64x32 osic1p-screen-c4p-64x32.o $<
+	$(SREC_CAT) helloc4p-64x32 -binary -offset $(STARTADDR) -o helloc4p-64x32.c1p -Ohio_Scientific -execution-start-address=$(STARTADDR)
+
 # Link program for 8 kB RAM and for loading with hybrid format
 hello8khybrid.wav: hello.c $(CC65LIB)
 	$(CL) $(CFLAGS) -u __BOOT__ --start-addr $(STARTADDR) -Wl -D,__HIMEM__=$$2000 --mapfile hello8khybrid.map -vm -t osic1p -o hello8khybrid.c1p $<
