@@ -39,9 +39,12 @@ CFLAGS = -O
 
 STARTADDR = 0x200
 
+# RAM size by default 32 kB
+HIMEM = 0x8000
+
 .SUFFIXES: .c1p .wav
 
-PROGS = hello hello8k hello8khybrid minimal misctest asmonly Eliza
+PROGS = hello hellohybrid minimal misctest asmonly Eliza
 OSIC1PTARGETS = $(PROGS:=.c1p)
 WAVTARGETS = $(OSIC1PTARGETS:.c1p=.wav)
 
@@ -51,29 +54,24 @@ wavs: $(WAVTARGETS)
 
 $(OSIC1PTARGETS): $(CC65LIB)
 
-# Link program for 8 kB RAM by defining __HIMEM__ symbol
-hello8k.c1p: hello.c $(CC65LIB)
-	$(CL) $(CFLAGS) --start-addr $(STARTADDR) -Wl -D,__HIMEM__=$$2000 --mapfile hello8k.map -vm -t osic1p -o hello8k $<
-	$(SREC_CAT) hello8k -binary -offset $(STARTADDR) -o hello8k.c1p -Ohio_Scientific -execution-start-address=$(STARTADDR)
-
 # Link program for Superboard /// in 32x28 screen mode
 hellos3-32x28.c1p: hello.c $(CC65LIB)
-	$(CL) $(CFLAGS) --start-addr $(STARTADDR) --mapfile hellos3-32x28.map -vm -t osic1p -o hellos3-32x28 osic1p-screen-s3-32x28.o $<
+	$(CL) $(CFLAGS) --start-addr $(STARTADDR) -Wl -D,__HIMEM__=$(HIMEM) --mapfile hellos3-32x28.map -vm -t osic1p -o hellos3-32x28 osic1p-screen-s3-32x28.o $<
 	$(SREC_CAT) hellos3-32x28 -binary -offset $(STARTADDR) -o hellos3-32x28.c1p -Ohio_Scientific -execution-start-address=$(STARTADDR)
 
-# Link program for 8 kB RAM and for loading with hybrid format
-hello8khybrid.wav: hello.c $(CC65LIB)
-	$(CL) $(CFLAGS) -u __BOOT__ --start-addr $(STARTADDR) -Wl -D,__HIMEM__=$$2000 --mapfile hello8khybrid.map -vm -t osic1p -o hello8khybrid.c1p $<
+# Link program for for loading with hybrid format
+hellohybrid.wav: hello.c $(CC65LIB)
+	$(CL) $(CFLAGS) -u __BOOT__ --start-addr $(STARTADDR) -Wl -D,__HIMEM__=$(HIMEM) --mapfile hello8khybrid.map -vm -t osic1p -o hello8khybrid.c1p $<
 	$(PYTHON3) kcs_encode_bin.py hello8khybrid.c1p hello8khybrid.wav
 	
 # Generate loadable program from C source
 .c.c1p:
-	$(CL) $(CFLAGS) --start-addr $(STARTADDR) --mapfile $(basename $<).map -vm -t osic1p $<
+	$(CL) $(CFLAGS) --start-addr $(STARTADDR) -Wl -D,__HIMEM__=$(HIMEM) --mapfile $(basename $<).map -vm -t osic1p $<
 	$(SREC_CAT) $(basename $<) -binary -offset $(STARTADDR) -o $(basename $<).c1p -Ohio_Scientific -execution-start-address=$(STARTADDR)
 
 # Generate loadable program from assembler source
 .s.c1p:
-	$(CL) $(ASFLAGS) -C osic1p-asm.cfg --start-addr $(STARTADDR) --mapfile $(basename $<).map -vm -t osic1p $<
+	$(CL) $(ASFLAGS) -C osic1p-asm.cfg --start-addr $(STARTADDR) -Wl -D,__HIMEM__=$(HIMEM) --mapfile $(basename $<).map -vm -t osic1p $<
 	$(SREC_CAT) $(basename $<) -binary -offset $(STARTADDR) -o $(basename $<).c1p -Ohio_Scientific -execution-start-address=$(STARTADDR)
 
 # Generate Kansas City Standard WAV file for upload over cassette port
