@@ -24,3 +24,6 @@ The Makefile can also generate Kansas City Standard WAV files for
 upload over the cassette port. For this a modified version of the Python
 script kcs_encody.py by [David Beazley](http://www.dabeaz.com/py-kcs/index.html)
 is used.
+
+The [tools/win subdirectory](/tools/win) contains PowerShell scripts to upload files over
+the serial port, for BASIC files and binary executables.
