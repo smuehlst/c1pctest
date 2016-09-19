@@ -20,18 +20,18 @@ try {
         $line = $reader.ReadLine()
         if ($line -eq $null) { break }
 
-		# Write the NULL bytes before each line
-		$port.Write($nulls, 0, $nulls.Count)
+        # Write the NULL bytes before each line
+        $port.Write($nulls, 0, $nulls.Count)
 
         # process the line
-		$port.WriteLine($line)
+        $port.WriteLine($line)
 
-		# echo the line to the shell
+        # echo the line to the shell
         $line
     }
 }
 finally {
     $reader.Close()
-	$port.Close()
+    $port.Close()
 }
 
