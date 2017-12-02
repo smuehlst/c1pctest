@@ -8,6 +8,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <setjmp.h>
+#include <ctype.h>
 
 typedef void (*fp)(void);
 
@@ -114,12 +115,43 @@ void t_conio(void)
     }
 }
 
+static
+void t_ctype(void)
+{
+    static char const s[] = "!\"abc123ABC?=";
+    const char *p;
+
+    cputs("original string:");
+    for (p = s; *p; p += 1)
+    {
+        cputc(*p);
+    }
+    cputs("\r\n");
+
+    cputs("toupper:");
+    for (p = s; *p; p += 1)
+    {
+        cputc(toupper(*p));
+    }
+    cputs("\r\n");
+
+    cputs("tolower:");
+    for (p = s; *p; p += 1)
+    {
+        cputc(tolower(*p));
+    }
+    cputs("\r\n");
+}
+
+
 static const test tests[] =
 {
-{ "malloc", t_malloc },
-{ "longjmp/setjmp", t_longjmp },
-{ "recursion", t_recursion },
-{ "conio", t_conio } };
+    { "malloc", t_malloc },
+    { "longjmp/setjmp", t_longjmp },
+    { "recursion", t_recursion },
+    { "conio", t_conio },
+    { "ctype", t_ctype }
+};
 
 int main(void)
 {
