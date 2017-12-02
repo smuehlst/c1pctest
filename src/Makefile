@@ -44,7 +44,7 @@ HIMEM = 0x8000
 
 .SUFFIXES: .c1p .wav
 
-PROGS = hello hellohybrid minimal misctest asmonly Eliza
+PROGS = hello minimal misctest asmonly Eliza
 OSIC1PTARGETS = $(PROGS:=.c1p)
 WAVTARGETS = $(OSIC1PTARGETS:.c1p=.wav)
 
@@ -59,15 +59,15 @@ hellos3-32x28.c1p: hello.c $(CC65LIB)
 	$(CL) $(CFLAGS) --start-addr $(STARTADDR) -Wl -D,__HIMEM__=$(HIMEM) --mapfile hellos3-32x28.map -vm -t osic1p -o hellos3-32x28 osic1p-screen-s3-32x28.o $<
 	$(SREC_CAT) hellos3-32x28 -binary -offset $(STARTADDR) -o hellos3-32x28.c1p -Ohio_Scientific -execution-start-address=$(STARTADDR)
 
-# Link program for for loading with hybrid format
-hellohybrid.wav: hello.c $(CC65LIB)
-	$(CL) $(CFLAGS) -u __BOOT__ --start-addr $(STARTADDR) -Wl -D,__HIMEM__=$(HIMEM) --mapfile hello8khybrid.map -vm -t osic1p -o hello8khybrid.c1p $<
-	$(PYTHON3) kcs_encode_bin.py hello8khybrid.c1p hello8khybrid.wav
-	
-# Generate loadable program from C source
+# Generate loadable program from C source in hybrid format
 .c.c1p:
-	$(CL) $(CFLAGS) --start-addr $(STARTADDR) -Wl -D,__HIMEM__=$(HIMEM) --mapfile $(basename $<).map -vm -t osic1p $<
-	$(SREC_CAT) $(basename $<) -binary -offset $(STARTADDR) -o $(basename $<).c1p -Ohio_Scientific -execution-start-address=$(STARTADDR)
+	$(CL) $(CFLAGS) -u __BOOT__ --start-addr $(STARTADDR) -Wl -D,__HIMEM__=$(HIMEM) --mapfile $(basename $<).map -vm -t osic1p -o $(basename $<).c1p $<
+
+# Generate loadable program from C source
+# This is no longer recommended as the upload takes much longer
+#.c.c1p:
+#	$(CL) $(CFLAGS) --start-addr $(STARTADDR) -Wl -D,__HIMEM__=$(HIMEM) --mapfile $(basename $<).map -vm -t osic1p $<
+#	$(SREC_CAT) $(basename $<) -binary -offset $(STARTADDR) -o $(basename $<).c1p -Ohio_Scientific -execution-start-address=$(STARTADDR)
 
 # Generate loadable program from assembler source
 .s.c1p:
