@@ -143,14 +143,42 @@ void t_ctype(void)
     cputs("\r\n");
 }
 
+static
+void t_kbhit(void)
+{
+    unsigned char const column = 3;
+    unsigned char const line = 5;
+    unsigned char const limit = 10;
+    unsigned char n = 0;
 
-static const test tests[] =
+    cputs("kbhit() test, press some keys\r\n");
+    cputs("'q' to quit test\r\n");
+
+    while (1)
+    {
+        cputcxy(column, line + n, ' ');
+        n = (n + 1) % limit;
+        cputcxy(column, line + n, '*');
+        if (kbhit())
+        {
+            char const c = cgetc();
+            cputcxy(column + 1, line + n, c);
+            if (c == 'q' || c == 'Q')
+            {
+                break;
+            }
+        }
+    }
+}
+
+static test const tests[] =
 {
     { "malloc", t_malloc },
     { "longjmp/setjmp", t_longjmp },
     { "recursion", t_recursion },
     { "conio", t_conio },
-    { "ctype", t_ctype }
+    { "ctype", t_ctype },
+    { "kbhit", t_kbhit }
 };
 
 int main(void)
