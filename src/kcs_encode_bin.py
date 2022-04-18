@@ -7,6 +7,8 @@
 # Modified for binary files for use with cc65 executables for OSI
 # computers by Stephan Muehlstrasser
 #
+# Original source available from http://www.dabeaz.com/py-kcs/index.html
+#
 # Requires Python 3.1.2 or newer
 
 """
